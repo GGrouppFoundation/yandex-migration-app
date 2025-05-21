@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <NoWarn>$(NoWarn);IDE0130;CA1859</NoWarn>
+    <RootNamespace>GGroupp.Yandex.Migration</RootNamespace>
+    <AssemblyName>GGroupp.Yandex.Migration.Application</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../endpoint/Configuration.Export/Endpoint/Endpoint.csproj" />
+    <ProjectReference Include="../../endpoint/Organization.GetList/Endpoint/Endpoint.csproj" />
+    <ProjectReference Include="../../service/Tracker/Api/Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GarageGroup.Infra.AspNetCore.AzureApplication" Version="4.2.0" />
+    <PackageReference Include="GarageGroup.Infra.Endpoint.AspNetCore" Version="0.22.0" />
+    <PackageReference Include="GarageGroup.Infra.Handler.AspNetCore" Version="0.1.1" />
+    <PackageReference Include="GarageGroup.Infra.HealthCheck.Handler" Version="0.3.0" />
+    <PackageReference Include="GarageGroup.Infra.Http.Api" Version="0.3.0" />
+    <PackageReference Include="GarageGroup.Infra.Http.Polly" Version="2.0.1" />
+    <PackageReference Include="GarageGroup.Infra.Swagger.Builder" Version="3.8.0" />
+    <PackageReference Include="GarageGroup.Infra.Swagger.UI" Version="2.9.0" />
+  </ItemGroup>
+
+</Project>

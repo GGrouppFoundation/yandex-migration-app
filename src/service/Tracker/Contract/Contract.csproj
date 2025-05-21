@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <NoWarn>$(NoWarn);IDE0130;CA1859</NoWarn>
+    <RootNamespace>GGroupp.Yandex.Migration</RootNamespace>
+    <AssemblyName>GGroupp.Yandex.Migration.Servuce.Tracker.Contract</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PrimeFuncPack.Core.Failure" Version="2.2.0" />
+    <PackageReference Include="PrimeFuncPack.Core.FlatArray" Version="1.5.1" />
+    <PackageReference Include="PrimeFuncPack.Core.Result" Version="2.0.2" />
+  </ItemGroup>
+
+</Project>
