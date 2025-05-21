@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="../../endpoint/Configuration.Export/Endpoint/Endpoint.csproj" />
     <ProjectReference Include="../../endpoint/Organization.GetList/Endpoint/Endpoint.csproj" />
+    <ProjectReference Include="../../endpoint/Queue.GetList/Endpoint/Endpoint.csproj" />
     <ProjectReference Include="../../service/Tracker/Api/Api.csproj" />
   </ItemGroup>
 

@@ -13,5 +13,6 @@ static class Program
         .UseStandardSwaggerUI()
         .UseTokenReader()
         .UseOrganizationListGetEndpoint()
+        .UseQueueListGetEndpoint()
         .RunAsync();
 }

@@ -9,6 +9,6 @@ public enum QueueListGetFailureCode
     [Problem(FailureStatusCode.Forbidden, "Not enough permissions.")]
     Forbidden,
 
-    [Problem(FailureStatusCode.BadRequest, "Organization ID is required.")]
+    [Problem(FailureStatusCode.UnprocessableEntity, "Organization ID is required.")]
     EmptyOrganizationId
 }

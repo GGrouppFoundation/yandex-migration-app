@@ -7,5 +7,5 @@ namespace GGroupp.Yandex.Migration;
 public interface IQueueListGetSupplier
 {
     ValueTask<Result<TrackerQueueListGetOut, Failure<TrackerQueueListGetFailureCode>>> GetQueuesAsync(
-        string organizationId, CancellationToken cancellationToken);
+        string input, CancellationToken cancellationToken);
 }
