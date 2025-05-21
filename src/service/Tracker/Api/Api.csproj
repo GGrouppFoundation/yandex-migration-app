@@ -9,7 +9,7 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <NoWarn>$(NoWarn);IDE0130;CA1859</NoWarn>
     <RootNamespace>GGroupp.Yandex.Migration</RootNamespace>
-    <AssemblyName>GGroupp.Yandex.Migration.Servuce.Tracker.Api</AssemblyName>
+    <AssemblyName>GGroupp.Yandex.Migration.Service.Tracker.Api</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
