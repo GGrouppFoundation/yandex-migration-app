@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <NoWarn>$(NoWarn);IDE0130;CA1859</NoWarn>
+    <RootNamespace>GGroupp.Yandex.Migration</RootNamespace>
+    <AssemblyName>GGroupp.Yandex.Migration.Servuce.Tracker.Api</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Contract/Contract.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EarlyFuncPack.Core.AsyncPipeline" Version="0.3.0" />
+    <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="0.3.0" />
+    <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.1.0" />
+  </ItemGroup>
+
+</Project>
