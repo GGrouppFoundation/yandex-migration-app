@@ -8,16 +8,16 @@ namespace GGroupp.Yandex.Migration;
 partial class TrackerApi
 {
     public ValueTask<Result<TrackerQueueListGetOut, Failure<TrackerQueueListGetFailureCode>>> GetQueuesAsync(
-        string input, CancellationToken cancellationToken)
+        TrackerQueueListGetIn input, CancellationToken cancellationToken)
         =>
         AsyncPipeline.Pipe(
             input, cancellationToken)
         .Pipe(
-            static organizationId => new HttpSendIn(HttpVerb.Get, "/v3/queues")
+            static @in => new HttpSendIn(HttpVerb.Get, "/v3/queues")
             {
                 Headers =
                 [
-                    new("X-Cloud-Org-ID", organizationId)
+                    new("X-Cloud-Org-ID", @in.OrganizationId)
                 ]
             })
         .PipeValue(

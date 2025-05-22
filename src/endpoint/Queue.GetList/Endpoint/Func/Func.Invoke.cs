@@ -15,7 +15,10 @@ partial class QueueListGetFunc
         .Pipe(
             Validate)
         .MapSuccess(
-            static @in => @in.OrganizationId)
+            static @in => new TrackerQueueListGetIn
+            {
+                OrganizationId = @in.OrganizationId
+            })
         .ForwardValue(
             trackerApi.GetQueuesAsync,
             static failure => failure.MapFailureCode(MapFailureCode))
