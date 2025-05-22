@@ -6,7 +6,7 @@ namespace GGroupp.Yandex.Migration;
 public sealed record class QueueListGetIn
 {
     public QueueListGetIn(
-        [QueryIn] string organizationId)
+        [RouteIn] string organizationId)
     {
         OrganizationId = organizationId.OrEmpty();
     }

@@ -5,8 +5,8 @@ using GarageGroup.Infra;
 
 namespace GGroupp.Yandex.Migration;
 
-[Endpoint(EndpointMethod.Get, "/queues")]
-[EndpointTag("Queue")]
+[Endpoint(EndpointMethod.Get, "/organizations/{organizationId}/queues")]
+[EndpointTag("Tracker Entities")]
 public interface IQueueListGetFunc
 {
     ValueTask<Result<QueueListGetOut, Failure<QueueListGetFailureCode>>> InvokeAsync(

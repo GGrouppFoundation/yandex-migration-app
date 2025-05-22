@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using GarageGroup.Infra;
 
 namespace GGroupp.Yandex.Migration;
 
@@ -10,15 +11,29 @@ partial class QueueListGetFunc
         QueueListGetIn input, CancellationToken cancellationToken)
         =>
         AsyncPipeline.Pipe(
-            input.OrganizationId, cancellationToken)
-        .PipeValue(
-            trackerApi.GetQueuesAsync)
-        .Map(
+            input, cancellationToken)
+        .Pipe(
+            Validate)
+        .MapSuccess(
+            static @in => @in.OrganizationId)
+        .ForwardValue(
+            trackerApi.GetQueuesAsync,
+            static failure => failure.MapFailureCode(MapFailureCode))
+        .MapSuccess(
             static success => new QueueListGetOut
             {
                 Queues = success.Queues.Map(MapQueue)
-            },
-            static failure => failure.MapFailureCode(MapFailureCode));
+            });
+
+    private static Result<QueueListGetIn, Failure<QueueListGetFailureCode>> Validate(QueueListGetIn input)
+    {
+        if (string.IsNullOrWhiteSpace(input.OrganizationId))
+        {
+            return Failure.Create(QueueListGetFailureCode.EmptyOrganizationId, "Organization ID is empty.");
+        }
+
+        return input;
+    }
 
     private static QueueItem MapQueue(TrackerQueue queue)
         =>
@@ -34,7 +49,6 @@ partial class QueueListGetFunc
         failureCode switch
         {
             TrackerQueueListGetFailureCode.Forbidden => QueueListGetFailureCode.Forbidden,
-            TrackerQueueListGetFailureCode.EmptyOrganizationId => QueueListGetFailureCode.EmptyOrganizationId,
             _ => QueueListGetFailureCode.Unknown
         };
 }
