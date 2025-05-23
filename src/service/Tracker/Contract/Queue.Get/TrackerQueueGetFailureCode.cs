@@ -1,6 +1,6 @@
 namespace GGroupp.Yandex.Migration;
 
-public enum TrackerQueueDetailGetFailureCode
+public enum TrackerQueueGetFailureCode
 {
     Unknown,
 

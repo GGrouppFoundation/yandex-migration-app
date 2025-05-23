@@ -2,7 +2,7 @@ using System;
 
 namespace GGroupp.Yandex.Migration;
 
-public sealed record class TrackerQueueDetailGetOut
+public sealed record class TrackerQueueGetOut
 {
     public required string Key { get; init; }
 
