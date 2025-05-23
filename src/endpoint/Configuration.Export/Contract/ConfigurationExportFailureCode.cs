@@ -12,11 +12,8 @@ public enum ConfigurationExportFailureCode
     [Problem(FailureStatusCode.BadRequest, "At least one QueueId must be specified.")]
     EmptyQueueIds,
 
-    [Problem(FailureStatusCode.UnprocessableEntity, detailFromFailureMessage: true)]
-    QueueProcessingFailure,
-
-    [Problem(FailureStatusCode.InternalServerError, "Failed to create the ZIP archive.")]
-    ArchiveCreationFailure,
+    [Problem(FailureStatusCode.NotFound, detailFromFailureMessage: true)]
+    QueueNotFound,
 
     [Problem(FailureStatusCode.Forbidden, detailFromFailureMessage: true)]
     Forbidden

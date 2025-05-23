@@ -24,10 +24,9 @@ partial class TrackerApi
             httpApi.SendAsync)
         .Map(
             static success => success.Body.DeserializeFromJson<QueueDetailJson>(),
-            static failure => failure.ToStandardFailure("Yandex Tracker API call to get queue detail failed.")
-        )
+            static failure => failure.ToStandardFailure("Yandex Tracker API call to get queue detail failed."))
         .Map(
-            static queue => MapQueue(queue),
+            MapQueue,
             static failure => failure.MapFailureCode(MapQueueGetFailureCode));
 
     private static TrackerQueueGetOut MapQueue(QueueDetailJson queue)
@@ -38,25 +37,25 @@ partial class TrackerApi
             Name = queue.Name.OrEmpty(),
             Lead = new TrackerQueueLead
             {
-                Id = queue.Lead?.Id.OrEmpty() ?? string.Empty
+                Id = queue.Lead?.Id ?? string.Empty
             },
             DefaultType = new TrackerQueueDefaultType
             {
-                Key = queue.DefaultType?.Key.OrEmpty() ?? string.Empty
+                Key = queue.DefaultType?.Key ?? string.Empty
             },
             DefaultPriority = new TrackerQueueDefaultPriority
             {
-                Key = queue.DefaultPriority?.Key.OrEmpty() ?? string.Empty
+                Key = queue.DefaultPriority?.Key ?? string.Empty
             },
-            IssueTypesConfig = queue.IssueTypesConfig.Map(issueTypeConfig => new TrackerQueueIssueTypeConfig
+            IssueTypesConfig = queue.IssueTypesConfig.Map(issueTypeConfig => new TrackerQueueIssueTypeConfig //map вынести отдельно
             {
                 IssueType = new TrackerQueueIssueType
                 {
-                    Key = issueTypeConfig.IssueType?.Key.OrEmpty() ?? string.Empty
+                    Key = issueTypeConfig.IssueType?.Key ?? string.Empty
                 },
                 Workflow = new TrackerQueueWorkflow
                 {
-                    Id = issueTypeConfig.Workflow?.Id.OrEmpty() ?? string.Empty
+                    Id = issueTypeConfig.Workflow?.Id ?? string.Empty
                 },
                 Resolutions = issueTypeConfig.Resolutions.Map(resolution => new TrackerQueueResolution
                 {

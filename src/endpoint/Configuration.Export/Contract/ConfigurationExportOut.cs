@@ -4,6 +4,6 @@ namespace GGroupp.Yandex.Migration;
 
 public sealed record class ConfigurationExportOut
 {
-    [RootBodyOut("application/zip")]
+    [JsonBodyOut("application/zip")]
     public required byte[] File { get; init; }
 }
