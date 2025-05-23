@@ -64,11 +64,11 @@ partial class ConfigurationExportFunc
                 LeadLogin = user.Login,
                 DefaultType = queue.DefaultType.Key,
                 DefaultPriority = queue.DefaultPriority.Key,
-                IssueTypesConfig = queue.IssueTypesConfig.Map(config => new IssueTypeConfigExport //выделить два метода для маппинга
+                IssueTypesConfig = queue.IssueTypesConfig.Map(config => new IssueTypeConfigExport
                 {
                     IssueType = config.IssueType.Key,
                     Workflow = config.Workflow.Id,
-                    Resolutions = config.Resolutions.Map(result => result.Key) //выделить два метода для маппинга
+                    Resolutions = config.Resolutions.Map(result => result.Key)
                 })
             });
 

@@ -3,7 +3,7 @@ using PrimeFuncPack;
 
 namespace GGroupp.Yandex.Migration;
 
-public static class OrganizationListGetDependency
+public static class ConfigurationExportDependency
 {
     public static Dependency<ConfigurationExportEndpoint> UseConfigurationExportEndpoint<TTrackerApi>(this Dependency<TTrackerApi> dependency)
         where TTrackerApi : IUserGetSupplier, IQueueGetSupplier

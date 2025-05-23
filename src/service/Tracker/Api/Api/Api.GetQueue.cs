@@ -47,7 +47,7 @@ partial class TrackerApi
             {
                 Key = queue.DefaultPriority?.Key ?? string.Empty
             },
-            IssueTypesConfig = queue.IssueTypesConfig.Map(issueTypeConfig => new TrackerQueueIssueTypeConfig //map вынести отдельно
+            IssueTypesConfig = queue.IssueTypesConfig.Map(issueTypeConfig => new TrackerQueueIssueTypeConfig
             {
                 IssueType = new TrackerQueueIssueType
                 {
