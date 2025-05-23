@@ -23,7 +23,11 @@ partial class ConfigurationExportFunc
             GetQueueExportDataAsync,
             ParallelOption)
         .Forward(
-            PackData);
+            PackIntoFile)
+        .MapSuccess(
+            static file => new ConfigurationExportOut(
+                fileName: $"tracker-{DateTime.Now:yyyyMMddHHmmss}.zip",
+                file: file));
 
     private ValueTask<Result<QueueExportData, Failure<ConfigurationExportFailureCode>>> GetQueueExportDataAsync(
         TrackerQueueGetIn input, CancellationToken cancellationToken)
@@ -68,11 +72,12 @@ partial class ConfigurationExportFunc
                 })
             });
 
-    private static Result<ConfigurationExportOut, Failure<ConfigurationExportFailureCode>> PackData(FlatArray<QueueExportData> queues)
+    private static Result<MemoryStream, Failure<ConfigurationExportFailureCode>> PackIntoFile(FlatArray<QueueExportData> queues)
     {
         try
         {
-            using var memoryStream = new MemoryStream();
+            var memoryStream = new MemoryStream();
+
             using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
             {
                 foreach (var queue in queues)
@@ -85,10 +90,8 @@ partial class ConfigurationExportFunc
                 }
             }
 
-            return new ConfigurationExportOut
-            {
-                File = memoryStream.ToArray()
-            };
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            return memoryStream;
         }
         catch (Exception ex)
         {
