@@ -47,21 +47,29 @@ partial class TrackerApi
             {
                 Key = queue.DefaultPriority?.Key ?? string.Empty
             },
-            IssueTypesConfig = queue.IssueTypesConfig.Map(issueTypeConfig => new TrackerQueueIssueTypeConfig
+            IssueTypesConfig = queue.IssueTypesConfig.Map(MapIssueTypeConfig)
+        };
+
+    private static TrackerQueueIssueTypeConfig MapIssueTypeConfig(QueueIssueTypeConfigJson issueTypeConfig)
+        =>
+        new()
+        {
+            IssueType = new TrackerQueueIssueType
             {
-                IssueType = new TrackerQueueIssueType
-                {
-                    Key = issueTypeConfig.IssueType?.Key ?? string.Empty
-                },
-                Workflow = new TrackerQueueWorkflow
-                {
-                    Id = issueTypeConfig.Workflow?.Id ?? string.Empty
-                },
-                Resolutions = issueTypeConfig.Resolutions.Map(resolution => new TrackerQueueResolution
-                {
-                    Key = resolution.Key.OrEmpty()
-                })
-            })
+                Key = issueTypeConfig.IssueType?.Key ?? string.Empty
+            },
+            Workflow = new TrackerQueueWorkflow
+            {
+                Id = issueTypeConfig.Workflow?.Id ?? string.Empty
+            },
+            Resolutions = issueTypeConfig.Resolutions.Map(MapResolution)
+        };
+
+    private static TrackerQueueResolution MapResolution(QueueResolutionJson resolution)
+        =>
+        new()
+        {
+            Key = resolution.Key.OrEmpty()
         };
 
     private static TrackerQueueGetFailureCode MapQueueGetFailureCode(HttpFailureCode httpFailureCode)

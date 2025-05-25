@@ -41,6 +41,19 @@ internal sealed partial class ConfigurationExportFunc(IQueueGetSupplier trackerQ
             };
     }
 
+    private static IssueTypeConfigExport MapIssueTypeConfig(TrackerQueueIssueTypeConfig queueIssueTypeConfig)
+        =>
+        new()
+        {
+            IssueType = queueIssueTypeConfig.IssueType.Key,
+            Workflow = queueIssueTypeConfig.Workflow.Id,
+            Resolutions = queueIssueTypeConfig.Resolutions.Map(MapResolution)
+        };
+
+    private static string MapResolution(TrackerQueueResolution queueResolution)
+        =>
+        queueResolution.Key;
+
     private static ConfigurationExportFailureCode MapQueueFailureCode(TrackerQueueGetFailureCode failureCode)
         =>
         failureCode switch

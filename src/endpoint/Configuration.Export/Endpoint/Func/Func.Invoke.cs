@@ -64,12 +64,7 @@ partial class ConfigurationExportFunc
                 LeadLogin = user.Login,
                 DefaultType = queue.DefaultType.Key,
                 DefaultPriority = queue.DefaultPriority.Key,
-                IssueTypesConfig = queue.IssueTypesConfig.Map(config => new IssueTypeConfigExport
-                {
-                    IssueType = config.IssueType.Key,
-                    Workflow = config.Workflow.Id,
-                    Resolutions = config.Resolutions.Map(result => result.Key)
-                })
+                IssueTypesConfig = queue.IssueTypesConfig.Map(config => MapIssueTypeConfig(config))
             });
 
     private static Result<MemoryStream, Failure<ConfigurationExportFailureCode>> PackIntoFile(FlatArray<QueueExportData> queues)
