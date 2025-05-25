@@ -26,7 +26,7 @@ partial class ConfigurationExportFunc
             PackIntoFile)
         .MapSuccess(
             static file => new ConfigurationExportOut(
-                fileName: $"tracker-{DateTime.Now:yyyyMMddHHmmss}.zip",
+                fileName: $"{ConfigurationExportConstants.FileNamePrefix}{DateTime.Now:yyyyMMddHHmmss}{ConfigurationExportConstants.FileExtension}",
                 file: file));
 
     private ValueTask<Result<QueueExportData, Failure<ConfigurationExportFailureCode>>> GetQueueExportDataAsync(
