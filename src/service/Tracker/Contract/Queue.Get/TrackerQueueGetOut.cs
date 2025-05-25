@@ -8,50 +8,50 @@ public sealed record class TrackerQueueGetOut
 
     public required string Name { get; init; }
 
-    public required TrackerQueueLead Lead { get; init; }
+    public required QueueLead Lead { get; init; }
 
-    public required TrackerQueueDefaultType DefaultType { get; init; }
+    public required QueueDefaultType DefaultType { get; init; }
 
-    public required TrackerQueueDefaultPriority DefaultPriority { get; init; }
+    public required QueueDefaultPriority DefaultPriority { get; init; }
 
-    public required FlatArray<TrackerQueueIssueTypeConfig> IssueTypesConfig { get; init; }
-}
+    public required FlatArray<QueueIssueTypeConfig> IssueTypesConfig { get; init; }
 
-public sealed record class TrackerQueueLead
-{
-    public required string Id { get; init; }
-}
+    public sealed record class QueueLead
+    {
+        public required string Id { get; init; }
+    }
 
-public sealed record class TrackerQueueDefaultType
-{
-    public required string Key { get; init; }
-}
+    public sealed record class QueueDefaultType
+    {
+        public required string Key { get; init; }
+    }
 
-public sealed record class TrackerQueueDefaultPriority
-{
-    public required string Key { get; init; }
-}
+    public sealed record class QueueDefaultPriority
+    {
+        public required string Key { get; init; }
+    }
 
-public sealed record class TrackerQueueIssueTypeConfig
-{
-    public required TrackerQueueIssueType IssueType { get; init; }
+    public sealed record class QueueIssueTypeConfig
+    {
+        public required QueueIssueType IssueType { get; init; }
 
-    public required TrackerQueueWorkflow Workflow { get; init; }
+        public required QueueWorkflow Workflow { get; init; }
 
-    public FlatArray<TrackerQueueResolution> Resolutions { get; init; }
-}
+        public FlatArray<QueueResolution> Resolutions { get; init; }
+    }
 
-public sealed record class TrackerQueueIssueType
-{
-    public required string Key { get; init; }
-}
+    public sealed record class QueueIssueType
+    {
+        public required string Key { get; init; }
+    }
 
-public sealed record class TrackerQueueWorkflow
-{
-    public required string Id { get; init; }
-}
+    public sealed record class QueueWorkflow
+    {
+        public required string Id { get; init; }
+    }
 
-public sealed record class TrackerQueueResolution
-{
-    public required string Key { get; init; }
+    public sealed record class QueueResolution
+    {
+        public required string Key { get; init; }
+    }
 }

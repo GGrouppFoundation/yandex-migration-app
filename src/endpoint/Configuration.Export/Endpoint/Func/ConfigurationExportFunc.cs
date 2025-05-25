@@ -45,7 +45,7 @@ internal sealed partial class ConfigurationExportFunc(IQueueGetSupplier trackerQ
             };
     }
 
-    private static IssueTypeConfigExport MapIssueTypeConfig(TrackerQueueIssueTypeConfig queueIssueTypeConfig)
+    private static IssueTypeConfigExport MapIssueTypeConfig(TrackerQueueGetOut.QueueIssueTypeConfig queueIssueTypeConfig)
         =>
         new()
         {
@@ -54,7 +54,7 @@ internal sealed partial class ConfigurationExportFunc(IQueueGetSupplier trackerQ
             Resolutions = queueIssueTypeConfig.Resolutions.Map(MapResolution)
         };
 
-    private static string MapResolution(TrackerQueueResolution queueResolution)
+    private static string MapResolution(TrackerQueueGetOut.QueueResolution queueResolution)
         =>
         queueResolution.Key;
 

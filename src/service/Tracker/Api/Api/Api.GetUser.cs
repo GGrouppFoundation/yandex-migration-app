@@ -24,7 +24,7 @@ partial class TrackerApi
             httpApi.SendAsync)
         .Map(
             static success => success.Body.DeserializeFromJson<UserJson>(),
-            static failure => failure.ToStandardFailure("Yandex Tracker API call to get user detail failed."))
+            static failure => failure.ToStandardFailure("Yandex Tracker API call to get user detail failed:"))
         .Map(
             static user => new TrackerUserGetOut
             {

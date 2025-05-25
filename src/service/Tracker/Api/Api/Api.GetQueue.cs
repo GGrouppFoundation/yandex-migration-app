@@ -24,7 +24,7 @@ partial class TrackerApi
             httpApi.SendAsync)
         .Map(
             static success => success.Body.DeserializeFromJson<QueueDetailJson>(),
-            static failure => failure.ToStandardFailure("Yandex Tracker API call to get queue detail failed."))
+            static failure => failure.ToStandardFailure("Yandex Tracker API call to get queue detail failed:"))
         .Map(
             MapQueue,
             static failure => failure.MapFailureCode(MapQueueGetFailureCode));
@@ -35,37 +35,37 @@ partial class TrackerApi
         {
             Key = queue.Key.OrEmpty(),
             Name = queue.Name.OrEmpty(),
-            Lead = new TrackerQueueLead
+            Lead = new TrackerQueueGetOut.QueueLead
             {
                 Id = queue.Lead?.Id ?? string.Empty
             },
-            DefaultType = new TrackerQueueDefaultType
+            DefaultType = new TrackerQueueGetOut.QueueDefaultType
             {
                 Key = queue.DefaultType?.Key ?? string.Empty
             },
-            DefaultPriority = new TrackerQueueDefaultPriority
+            DefaultPriority = new TrackerQueueGetOut.QueueDefaultPriority
             {
                 Key = queue.DefaultPriority?.Key ?? string.Empty
             },
             IssueTypesConfig = queue.IssueTypesConfig.Map(MapIssueTypeConfig)
         };
 
-    private static TrackerQueueIssueTypeConfig MapIssueTypeConfig(QueueIssueTypeConfigJson issueTypeConfig)
+    private static TrackerQueueGetOut.QueueIssueTypeConfig MapIssueTypeConfig(QueueDetailJson.IssueTypeConfigJson issueTypeConfig)
         =>
         new()
         {
-            IssueType = new TrackerQueueIssueType
+            IssueType = new TrackerQueueGetOut.QueueIssueType
             {
                 Key = issueTypeConfig.IssueType?.Key ?? string.Empty
             },
-            Workflow = new TrackerQueueWorkflow
+            Workflow = new TrackerQueueGetOut.QueueWorkflow
             {
                 Id = issueTypeConfig.Workflow?.Id ?? string.Empty
             },
             Resolutions = issueTypeConfig.Resolutions.Map(MapResolution)
         };
 
-    private static TrackerQueueResolution MapResolution(QueueResolutionJson resolution)
+    private static TrackerQueueGetOut.QueueResolution MapResolution(QueueDetailJson.ResolutionJson resolution)
         =>
         new()
         {

@@ -8,50 +8,50 @@ internal readonly record struct QueueDetailJson
 
     public string? Name { get; init; }
 
-    public QueueLeadJson? Lead { get; init; }
+    public LeadJson? Lead { get; init; }
 
-    public QueueDefaultTypeJson? DefaultType { get; init; }
+    public DefaultTypeJson? DefaultType { get; init; }
 
-    public QueueDefaultPriorityJson? DefaultPriority { get; init; }
+    public DefaultPriorityJson? DefaultPriority { get; init; }
 
-    public FlatArray<QueueIssueTypeConfigJson> IssueTypesConfig { get; init; }
-}
+    public FlatArray<IssueTypeConfigJson> IssueTypesConfig { get; init; }
 
-internal sealed record class QueueLeadJson
-{
-    public string? Id { get; init; }
-}
+    internal sealed record class LeadJson
+    {
+        public string? Id { get; init; }
+    }
 
-internal sealed record class QueueDefaultTypeJson
-{
-    public string? Key { get; init; }
-}
+    internal sealed record class DefaultTypeJson
+    {
+        public string? Key { get; init; }
+    }
 
-internal sealed record class QueueDefaultPriorityJson
-{
-    public string? Key { get; init; }
-}
+    internal sealed record class DefaultPriorityJson
+    {
+        public string? Key { get; init; }
+    }
 
-internal sealed record class QueueIssueTypeConfigJson
-{
-    public QueueIssueTypeJson? IssueType { get; init; }
+    internal sealed record class IssueTypeConfigJson
+    {
+        public IssueTypeJson? IssueType { get; init; }
 
-    public QueueWorkflowJson? Workflow { get; init; }
+        public WorkflowJson? Workflow { get; init; }
 
-    public FlatArray<QueueResolutionJson> Resolutions { get; init; }
-}
+        public FlatArray<ResolutionJson> Resolutions { get; init; }
+    }
 
-internal sealed record class QueueIssueTypeJson
-{
-    public string? Key { get; init; }
-}
+    internal sealed record class IssueTypeJson
+    {
+        public string? Key { get; init; }
+    }
 
-internal sealed record class QueueWorkflowJson
-{
-    public string? Id { get; init; }
-}
+    internal sealed record class WorkflowJson
+    {
+        public string? Id { get; init; }
+    }
 
-internal sealed record class QueueResolutionJson
-{
-    public string? Key { get; init; }
+    internal sealed record class ResolutionJson
+    {
+        public string? Key { get; init; }
+    }
 }
