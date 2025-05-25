@@ -9,6 +9,12 @@ public enum ConfigurationExportFailureCode
     [Problem(FailureStatusCode.BadRequest, "OrganizationId is required.")]
     EmptyOrganizationId,
 
+    [Problem(FailureStatusCode.BadRequest, "At least one QueueId must be specified.")]
+    EmptyQueueIds,
+
+    [Problem(FailureStatusCode.NotFound, detailFromFailureMessage: true)]
+    QueueNotFound,
+
     [Problem(FailureStatusCode.Forbidden, detailFromFailureMessage: true)]
     Forbidden
 }

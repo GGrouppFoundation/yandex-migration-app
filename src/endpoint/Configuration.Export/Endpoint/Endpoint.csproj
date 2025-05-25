@@ -12,4 +12,14 @@
     <AssemblyName>GGroupp.Yandex.Migration.Endpoint.Configuration.Export.Endpoint</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../../service/Tracker/Contract/Contract.csproj" />
+    <ProjectReference Include="../Contract/Contract.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GarageGroup.Core.AsyncPipeline.Extensions" Version="0.3.0" />
+    <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.1.0" />
+  </ItemGroup>
+
 </Project>

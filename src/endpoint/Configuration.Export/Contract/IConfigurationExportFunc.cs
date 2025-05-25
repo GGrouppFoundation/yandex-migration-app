@@ -5,7 +5,7 @@ using GarageGroup.Infra;
 
 namespace GGroupp.Yandex.Migration;
 
-[Endpoint(EndpointMethod.Post, "/configuration/export")]
+[Endpoint(EndpointMethod.Post, "/organizations/{organizationId}/configuration/export")]
 [EndpointTag("Configuration")]
 public interface IConfigurationExportFunc
 {

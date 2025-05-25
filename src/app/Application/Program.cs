@@ -14,5 +14,6 @@ static class Program
         .UseTokenReader()
         .UseOrganizationListGetEndpoint()
         .UseQueueListGetEndpoint()
+        .UseConfigurationExportEndpoint()
         .RunAsync();
 }

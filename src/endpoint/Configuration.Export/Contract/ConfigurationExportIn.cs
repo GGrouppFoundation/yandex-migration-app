@@ -6,7 +6,7 @@ namespace GGroupp.Yandex.Migration;
 public sealed record class ConfigurationExportIn
 {
     public ConfigurationExportIn(
-        [JsonBodyIn] string organizationId,
+        [RouteIn] string organizationId,
         [JsonBodyIn] FlatArray<int> queueIds)
     {
         OrganizationId = organizationId.OrEmpty();
