@@ -26,7 +26,7 @@ partial class ConfigurationExportFunc
             PackIntoFile)
         .MapSuccess(
             static file => new ConfigurationExportOut(
-                fileName: $"{ConfigurationExportConstants.FileNamePrefix}{DateTime.Now:yyyyMMddHHmmss}{ConfigurationExportConstants.FileExtension}",
+                fileName: $"{FileNamePrefix}{DateTime.Now:yyyyMMddHHmmss}{FileExtension}",
                 file: file));
 
     private ValueTask<Result<QueueExportData, Failure<ConfigurationExportFailureCode>>> GetQueueExportDataAsync(

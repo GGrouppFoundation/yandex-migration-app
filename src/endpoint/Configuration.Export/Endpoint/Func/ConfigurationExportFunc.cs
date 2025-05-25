@@ -5,6 +5,11 @@ namespace GGroupp.Yandex.Migration;
 
 internal sealed partial class ConfigurationExportFunc(IQueueGetSupplier trackerQueueApi, IUserGetSupplier trackerUserApi) : IConfigurationExportFunc
 {
+
+    public const string FileExtension = ".ytexp";
+
+    public const string FileNamePrefix = "tracker-config-";
+
     private static readonly PipelineParallelOption ParallelOption
         =
         new()
