@@ -18,7 +18,7 @@ partial class TrackerApi
             httpApi.SendAsync)
         .Map(
             static success => success.Body.DeserializeFromJson<OrganizationListJson>(),
-            static failure => failure.ToStandardFailure("An unexpected error occured when trying to get organizations:"))
+            ReadOrganizationFailure)
         .Map(
             static list => new TrackerOrganizationListGetOut
             {
@@ -34,11 +34,26 @@ partial class TrackerApi
             Title = organization.Title.OrEmpty()
         };
 
+    private static Failure<HttpFailureCode> ReadOrganizationFailure(HttpSendFailure failure)
+    {
+        if (failure.Body.Type.IsJsonMediaType(isApplicationJsonStrict: false))
+        {
+            var message = failure.Body.DeserializeFromJson<OrganizationFailureJson>().Message;
+            if (string.IsNullOrWhiteSpace(message) is false)
+            {
+                return new(failure.StatusCode, message);
+            }
+        }
+
+        return failure.ToStandardFailure("An unexpected error occured when trying to get organizations:");
+    }
+
     private static TrackerOrganizationListGetFailureCode MapOrganizationListGetFailureCode(HttpFailureCode failureCode)
         =>
         failureCode switch
         {
             HttpFailureCode.Forbidden => TrackerOrganizationListGetFailureCode.Forbidden,
+            HttpFailureCode.Unauthorized => TrackerOrganizationListGetFailureCode.Unauthorized,
             _ => default
         };
 }
