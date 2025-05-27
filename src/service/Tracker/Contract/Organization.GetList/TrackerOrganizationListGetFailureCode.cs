@@ -4,5 +4,7 @@ public enum TrackerOrganizationListGetFailureCode
 {
     Unknown,
 
+    Unauthorized,
+
     Forbidden
 }
