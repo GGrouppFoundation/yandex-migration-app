@@ -52,8 +52,8 @@ partial class TrackerApi
         =>
         failureCode switch
         {
-            HttpFailureCode.Forbidden => TrackerOrganizationListGetFailureCode.Forbidden,
             HttpFailureCode.Unauthorized => TrackerOrganizationListGetFailureCode.Unauthorized,
+            HttpFailureCode.Forbidden => TrackerOrganizationListGetFailureCode.Forbidden,
             _ => default
         };
 }
