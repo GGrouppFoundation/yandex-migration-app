@@ -81,7 +81,7 @@ internal sealed partial class ConfigurationExportFunc(IQueueGetSupplier trackerQ
 
         public required string Name { get; init; }
 
-        public required string LeadLogin { get; init; }
+        public required string Lead { get; init; }
 
         public required string DefaultType { get; init; }
 
