@@ -45,11 +45,11 @@ internal sealed partial class ConfigurationImportFunc(IQueueCreateSupplier track
             OrganizationId = organizationId,
             Queue = new()
             {
-                Key = queue.Key,
-                Name = queue.Name,
-                Lead = queue.Lead,
-                DefaultType = queue.DefaultType,
-                DefaultPriority = queue.DefaultPriority,
+                Key = queue.Key.OrEmpty(),
+                Name = queue.Name.OrEmpty(),
+                Lead = queue.Lead.OrEmpty(),
+                DefaultType = queue.DefaultType.OrEmpty(),
+                DefaultPriority = queue.DefaultPriority.OrEmpty(),
                 IssueTypesConfig = queue.IssueTypesConfig.Map(MapIssueTypeConfig)
             }
         };
@@ -59,32 +59,32 @@ internal sealed partial class ConfigurationImportFunc(IQueueCreateSupplier track
         =>
         new()
         {
-            IssueType = issueTypeConfig.IssueType,
-            Workflow = issueTypeConfig.Workflow,
+            IssueType = issueTypeConfig.IssueType.OrEmpty(),
+            Workflow = issueTypeConfig.Workflow.OrEmpty(),
             Resolutions = issueTypeConfig.Resolutions
         };
 
     private readonly record struct QueueImportData
     {
-        public required string Key { get; init; }
+        public required string? Key { get; init; }
 
-        public required string Name { get; init; }
+        public required string? Name { get; init; }
 
-        public required string Lead { get; init; }
+        public required string? Lead { get; init; }
 
-        public required string DefaultType { get; init; }
+        public required string? DefaultType { get; init; }
 
-        public required string DefaultPriority { get; init; }
+        public required string? DefaultPriority { get; init; }
 
         public FlatArray<IssueTypeConfig> IssueTypesConfig { get; init; }
     }
 
-    private readonly record struct IssueTypeConfig
+    private sealed record class IssueTypeConfig
     {
-        public required string IssueType { get; init; }
+        public required string? IssueType { get; init; }
 
-        public required string Workflow { get; init; }
+        public required string? Workflow { get; init; }
 
-        public FlatArray<string>? Resolutions { get; init; }
+        public FlatArray<string> Resolutions { get; init; }
     }
 }
