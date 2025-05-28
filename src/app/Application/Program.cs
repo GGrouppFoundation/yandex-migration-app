@@ -15,5 +15,6 @@ static class Program
         .UseOrganizationListGetEndpoint()
         .UseQueueListGetEndpoint()
         .UseConfigurationExportEndpoint()
+        .UseConfigurationImportEndpoint()
         .RunAsync();
 }

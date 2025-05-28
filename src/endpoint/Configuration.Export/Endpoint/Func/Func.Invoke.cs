@@ -61,7 +61,7 @@ partial class ConfigurationExportFunc
             {
                 Key = queue.Key,
                 Name = queue.Name,
-                LeadLogin = user.Login,
+                Lead = user.Login,
                 DefaultType = queue.DefaultType.Key,
                 DefaultPriority = queue.DefaultPriority.Key,
                 IssueTypesConfig = queue.IssueTypesConfig.Map(MapIssueTypeConfig)

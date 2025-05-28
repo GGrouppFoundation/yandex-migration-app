@@ -51,6 +51,7 @@ partial class QueueListGetFunc
         failureCode switch
         {
             TrackerQueueListGetFailureCode.Forbidden => QueueListGetFailureCode.Forbidden,
+            TrackerQueueListGetFailureCode.Unauthorized => QueueListGetFailureCode.Unauthorized,
             _ => QueueListGetFailureCode.Unknown
         };
 }

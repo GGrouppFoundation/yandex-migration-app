@@ -9,17 +9,13 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <NoWarn>$(NoWarn);IDE0130;CA1859</NoWarn>
     <RootNamespace>GGroupp.Yandex.Migration</RootNamespace>
-    <AssemblyName>GGroupp.Yandex.Migration.Endpoint.Configuration.Export.Endpoint</AssemblyName>
+    <AssemblyName>GGroupp.Yandex.Migration.Endpoint.Configuration.Import.Contract</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../../service/Tracker/Contract/Contract.csproj" />
-    <ProjectReference Include="../Contract/Contract.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="GarageGroup.Core.AsyncPipeline.Extensions" Version="0.4.0" />
-    <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.1.0" />
+    <PackageReference Include="GarageGroup.Infra.Endpoint.Core" Version="0.17.0" />
+    <PackageReference Include="PrimeFuncPack.Core.FlatArray" Version="1.5.1" />
+    <PackageReference Include="PrimeFuncPack.Primitives.Strings" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

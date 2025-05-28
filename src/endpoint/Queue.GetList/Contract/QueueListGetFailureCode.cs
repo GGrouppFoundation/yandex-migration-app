@@ -10,5 +10,8 @@ public enum QueueListGetFailureCode
     Forbidden,
 
     [Problem(FailureStatusCode.BadRequest, "Organization ID is required.")]
-    EmptyOrganizationId
+    EmptyOrganizationId,
+
+    [Problem(FailureStatusCode.Unauthorized, detailFromFailureMessage: true)]
+    Unauthorized,
 }

@@ -15,16 +15,13 @@ partial class TrackerApi
         .Pipe(
             static @in => new HttpSendIn(HttpVerb.Get, "/v3/queues")
             {
-                Headers =
-                [
-                    new("X-Cloud-Org-ID", @in.OrganizationId)
-                ]
+                Headers = BuildHeader(@in.OrganizationId)
             })
         .PipeValue(
             httpApi.SendAsync)
         .Map(
             static success => success.Body.DeserializeFromJson<FlatArray<QueueJson>>(),
-            static failure => failure.ToStandardFailure("An unexpected error occurred when trying to get queues:"))
+            ReadTrackerFailure)
         .Map(
             static list => new TrackerQueueListGetOut
             {
@@ -46,6 +43,7 @@ partial class TrackerApi
         failureCode switch
         {
             HttpFailureCode.UnprocessableContent => TrackerQueueListGetFailureCode.EmptyOrganizationId,
+            HttpFailureCode.Unauthorized => TrackerQueueListGetFailureCode.Unauthorized,
             HttpFailureCode.Forbidden => TrackerQueueListGetFailureCode.Forbidden,
             _ => default
         };
