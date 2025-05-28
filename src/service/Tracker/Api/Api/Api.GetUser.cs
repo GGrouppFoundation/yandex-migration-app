@@ -26,16 +26,13 @@ partial class TrackerApi
         .Pipe(
             static @in => new HttpSendIn(HttpVerb.Get, $"/v3/users/{@in.UserId}")
             {
-                Headers =
-                [
-                    new ("X-Cloud-Org-ID", @in.OrganizationId)
-                ]
+                Headers = BuildHeader(@in.OrganizationId)
             })
         .PipeValue(
             httpApi.SendAsync)
         .Map(
             static success => success.Body.DeserializeFromJson<UserJson>(),
-            static failure => failure.ToStandardFailure("Yandex Tracker API call to get user detail failed:"))
+            ReadTrackerFailure)
         .Map(
             static user => new TrackerUserGetOut
             {

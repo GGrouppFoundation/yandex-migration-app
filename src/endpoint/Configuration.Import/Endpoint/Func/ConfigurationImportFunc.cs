@@ -25,38 +25,20 @@ internal sealed partial class ConfigurationImportFunc(IQueueCreateSupplier track
             return Failure.Create(ConfigurationImportFailureCode.FileNotProvided, "A file must be provided for import.");
         }
 
-        if (input.ContentLength is 0)
-        {
-            return Failure.Create(ConfigurationImportFailureCode.FileIsEmpty, "The uploaded file is empty.");
-        }
-
-        // check file extension?
-
         return input;
     }
-
-    private static QueueItem MapQueue(TrackerQueueCreateOut queue)
-        =>
-        new()
-        {
-            Id = queue.Id,
-            Key = queue.Key,
-            Name = queue.Name
-        };
 
     private static ConfigurationImportFailureCode MapQueueFailureCode(TrackerQueueCreateFailureCode failureCode)
         =>
         failureCode switch
         {
-            TrackerQueueCreateFailureCode.BadRequest => ConfigurationImportFailureCode.QueueCreationFailure,
             TrackerQueueCreateFailureCode.Forbidden => ConfigurationImportFailureCode.Forbidden,
-            TrackerQueueCreateFailureCode.ReferenceNotFound => ConfigurationImportFailureCode.ReferenceNotFound,
-            TrackerQueueCreateFailureCode.Conflict => ConfigurationImportFailureCode.QueueConflictCreationFailure,
+            TrackerQueueCreateFailureCode.Unauthorized => ConfigurationImportFailureCode.Unauthorized,
             _ => ConfigurationImportFailureCode.Unknown
         };
 
     private static TrackerQueueCreateIn MapTrackerQueue(
-    QueueImportData queue, string organizationId)
+        QueueImportData queue, string organizationId)
         =>
         new()
         {

@@ -6,6 +6,8 @@ public enum TrackerQueueCreateFailureCode
 
     Forbidden,
 
+    Unauthorized,
+
     BadRequest,
 
     Conflict,

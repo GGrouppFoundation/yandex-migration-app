@@ -6,6 +6,8 @@ public enum TrackerQueueGetFailureCode
 
     Forbidden,
 
+    Unauthorized,
+
     NotFound,
 
     EmptyOrganizationId

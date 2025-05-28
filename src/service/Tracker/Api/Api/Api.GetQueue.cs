@@ -15,16 +15,13 @@ partial class TrackerApi
         .Pipe(
             static @in => new HttpSendIn(HttpVerb.Get, $"/v3/queues/{@in.QueueId}?expand=issueTypesConfig")
             {
-                Headers =
-                [
-                    new("X-Cloud-Org-ID", @in.OrganizationId)
-                ]
+                Headers = BuildHeader(@in.OrganizationId)
             })
         .PipeValue(
             httpApi.SendAsync)
         .Map(
             static success => success.Body.DeserializeFromJson<QueueDetailJson>(),
-            static failure => failure.ToStandardFailure("Yandex Tracker API call to get queue detail failed:"))
+            ReadTrackerFailure)
         .Map(
             MapQueue,
             static failure => failure.MapFailureCode(MapQueueGetFailureCode));
@@ -77,6 +74,7 @@ partial class TrackerApi
         httpFailureCode switch
         {
             HttpFailureCode.NotFound => TrackerQueueGetFailureCode.NotFound,
+            HttpFailureCode.Unauthorized => TrackerQueueGetFailureCode.Unauthorized,
             HttpFailureCode.Forbidden => TrackerQueueGetFailureCode.Forbidden,
             _ => TrackerQueueGetFailureCode.Unknown
         };

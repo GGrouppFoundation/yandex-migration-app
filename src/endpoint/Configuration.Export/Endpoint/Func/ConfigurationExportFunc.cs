@@ -63,6 +63,7 @@ internal sealed partial class ConfigurationExportFunc(IQueueGetSupplier trackerQ
         failureCode switch
         {
             TrackerQueueGetFailureCode.Forbidden => ConfigurationExportFailureCode.Forbidden,
+            TrackerQueueGetFailureCode.Unauthorized => ConfigurationExportFailureCode.Unauthorized,
             TrackerQueueGetFailureCode.NotFound => ConfigurationExportFailureCode.QueueNotFound,
             _ => ConfigurationExportFailureCode.Unknown
         };
@@ -72,6 +73,7 @@ internal sealed partial class ConfigurationExportFunc(IQueueGetSupplier trackerQ
         failureCode switch
         {
             TrackerUserGetFailureCode.Forbidden => ConfigurationExportFailureCode.Forbidden,
+            TrackerUserGetFailureCode.Unauthorized => ConfigurationExportFailureCode.Unauthorized,
             _ => ConfigurationExportFailureCode.Unknown
         };
 

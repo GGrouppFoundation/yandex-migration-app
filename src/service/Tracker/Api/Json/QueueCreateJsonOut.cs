@@ -1,8 +1,8 @@
 namespace GGroupp.Yandex.Migration;
 
-public readonly record struct QueueCreateJson
+public readonly record struct QueueCreateJsonOut
 {
-    public required string Id { get; init; }
+    public required int Id { get; init; }
 
     public required string Key { get; init; }
 
