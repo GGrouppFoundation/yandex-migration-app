@@ -32,6 +32,7 @@ partial class OrganizationListGetFunc
         =>
         failureCode switch
         {
+            TrackerOrganizationListGetFailureCode.Unauthorized => OrganizationListGetFailureCode.Unauthorized,
             TrackerOrganizationListGetFailureCode.Forbidden => OrganizationListGetFailureCode.Forbidden,
             _ => default
         };
