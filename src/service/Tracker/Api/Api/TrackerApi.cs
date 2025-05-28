@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using GarageGroup.Infra;
 
 namespace GGroupp.Yandex.Migration;
@@ -28,7 +29,7 @@ internal sealed partial class TrackerApi(IHttpApi httpApi) : ITrackerApi
         return failure.ToStandardFailure("An unexpected error occured when trying to create queue:");
     }
 
-    private static FlatArray<System.Collections.Generic.KeyValuePair<string, string>> BuildHeader(string organizationId)
+    private static FlatArray<KeyValuePair<string, string>> BuildHeader(string organizationId)
         =>
         [new("X-Cloud-Org-ID", organizationId)];
 }
