@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Core.AsyncPipeline.Extensions" Version="0.3.0" />
+    <PackageReference Include="GarageGroup.Core.AsyncPipeline.Extensions" Version="0.4.0" />
     <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.1.0" />
   </ItemGroup>
 
