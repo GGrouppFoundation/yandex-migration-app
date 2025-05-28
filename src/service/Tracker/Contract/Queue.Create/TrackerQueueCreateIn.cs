@@ -29,6 +29,6 @@ public sealed record class TrackerQueueCreateIn
 
         public required string Workflow { get; init; }
 
-        public FlatArray<string>? Resolutions { get; init; }
+        public FlatArray<string> Resolutions { get; init; }
     }
 }

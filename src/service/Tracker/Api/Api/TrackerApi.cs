@@ -29,7 +29,6 @@ internal sealed partial class TrackerApi(IHttpApi httpApi) : ITrackerApi
     }
 
     private static FlatArray<System.Collections.Generic.KeyValuePair<string, string>> BuildHeader(string organizationId)
-    {
-        return [new("X-Cloud-Org-ID", organizationId)];
-    }
+        =>
+        [new("X-Cloud-Org-ID", organizationId)];
 }

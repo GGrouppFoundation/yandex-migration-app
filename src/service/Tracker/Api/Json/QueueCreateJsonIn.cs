@@ -22,6 +22,6 @@ public readonly record struct QueueCreateJsonIn
 
         public required string Workflow { get; init; }
 
-        public FlatArray<string>? Resolutions { get; init; }
+        public FlatArray<string> Resolutions { get; init; }
     }
 }
