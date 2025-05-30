@@ -4,7 +4,7 @@ public sealed record class ImportResult
 {
     public required string OriginalKey { get; init; }
 
-    public bool IsSuccess { get; init; }
+    public required bool IsSuccess { get; init; }
 
     public int? NewId { get; init; }
 

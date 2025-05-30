@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="GarageGroup.Infra.AspNetCore.AzureApplication" Version="4.2.0" />
+    <PackageReference Include="GarageGroup.Infra.AspNetCore.Middleware" Version="1.2.0" />
     <PackageReference Include="GarageGroup.Infra.Endpoint.AspNetCore" Version="0.22.0" />
     <PackageReference Include="GarageGroup.Infra.Handler.AspNetCore" Version="0.1.1" />
     <PackageReference Include="GarageGroup.Infra.HealthCheck.Handler" Version="0.3.0" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace GGroupp.Yandex.Migration;
 
 partial class TokenReaderHttpHandler
-{ 
+{
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
