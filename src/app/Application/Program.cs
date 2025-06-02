@@ -12,6 +12,7 @@ static class Program
         .UseHealthCheck()
         .UseSwagger()
         .UseStandardSwaggerUI()
+        .UseTokenExchangeEndpoint()
         .UseTokenReader()
         .UseOrganizationListGetEndpoint()
         .UseQueueListGetEndpoint()
