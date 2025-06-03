@@ -16,11 +16,13 @@
     <ProjectReference Include="../../endpoint/Configuration.Import/Endpoint/Endpoint.csproj" />
     <ProjectReference Include="../../endpoint/Organization.GetList/Endpoint/Endpoint.csproj" />
     <ProjectReference Include="../../endpoint/Queue.GetList/Endpoint/Endpoint.csproj" />
+    <ProjectReference Include="../../endpoint/Token.Exchange/Endpoint/Endpoint.csproj" />
     <ProjectReference Include="../../service/Tracker/Api/Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="GarageGroup.Infra.AspNetCore.AzureApplication" Version="4.2.0" />
+    <PackageReference Include="GarageGroup.Infra.AspNetCore.Middleware" Version="1.2.0" />
     <PackageReference Include="GarageGroup.Infra.Endpoint.AspNetCore" Version="0.22.0" />
     <PackageReference Include="GarageGroup.Infra.Handler.AspNetCore" Version="0.1.1" />
     <PackageReference Include="GarageGroup.Infra.HealthCheck.Handler" Version="0.3.0" />

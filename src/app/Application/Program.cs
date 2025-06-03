@@ -8,9 +8,11 @@ static class Program
     static Task Main(string[] args)
         =>
         AzureApplication.Create(args, ApplicationHost.Configure)
+        .AllowCors()
         .UseHealthCheck()
         .UseSwagger()
         .UseStandardSwaggerUI()
+        .UseTokenExchangeEndpoint()
         .UseTokenReader()
         .UseOrganizationListGetEndpoint()
         .UseQueueListGetEndpoint()

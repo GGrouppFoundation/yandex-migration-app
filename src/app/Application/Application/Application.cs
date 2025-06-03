@@ -14,4 +14,11 @@ internal static partial class Application
         .Map<HttpMessageHandler>(TokenReaderHttpHandler.InternalResolve)
         .UseHttpApi("TrackerApi")
         .UseTrackerApi();
+
+    private static Dependency<IHttpApi> UseTokenApi()
+        =>
+        PrimaryHandler.UseStandardSocketsHttpHandler()
+        .UseLogging("TokenApi")
+        .UsePollyStandard()
+        .UseHttpApi("TokenApi");
 }

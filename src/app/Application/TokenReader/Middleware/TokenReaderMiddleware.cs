@@ -7,7 +7,7 @@ namespace GGroupp.Yandex.Migration;
 
 internal static partial class TokenReaderMiddleware
 {
-    private const string BearerSchemaName = "Bearer";
+    private const string TokenSchemaName = "Bearer";
 
     private const string SecuritySchemeKey = "jwtAuthorization";
 
@@ -27,7 +27,7 @@ internal static partial class TokenReaderMiddleware
 
         return authValue;
     }
-    
+
     private static Result<string, Failure<Unit>> GetBearerValue(this HttpContext context, string authHeaderValue)
     {
         var arr = authHeaderValue.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -36,9 +36,9 @@ internal static partial class TokenReaderMiddleware
             return Failure.Create($"Authorization header value '{authHeaderValue}' is invalid.");
         }
 
-        if (string.Equals(BearerSchemaName, arr[0], StringComparison.InvariantCultureIgnoreCase) is false)
+        if (string.Equals(TokenSchemaName, arr[0], StringComparison.InvariantCultureIgnoreCase) is false)
         {
-            return Failure.Create($"Authorization token '{authHeaderValue}' is invalid: the schema must be Bearer.");
+            return Failure.Create($"Authorization token '{authHeaderValue}' is invalid: the schema must be {TokenSchemaName}.");
         }
 
         return arr[1];
