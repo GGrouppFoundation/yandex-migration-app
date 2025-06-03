@@ -18,7 +18,7 @@ internal static partial class Application
     private static Dependency<IHttpApi> UseTokenApi()
         =>
         PrimaryHandler.UseStandardSocketsHttpHandler()
-        .UseLogging("TokenApi", HttpLoggerType.RequestBody)
+        .UseLogging("TokenApi")
         .UsePollyStandard()
         .UseHttpApi("TokenApi");
 }

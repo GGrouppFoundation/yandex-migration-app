@@ -15,16 +15,16 @@ internal sealed partial class TokenExchangeFunc(IHttpApi httpApi) : ITokenExchan
         return input;
     }
 
-    internal sealed record class TokenExchangeRequestJson
+    private sealed record class TokenExchangeRequestJson
     {
         public required string YandexPassportOauthToken { get; init; }
     }
 
-    internal readonly record struct TokenExchangeResponseJson
+    private readonly record struct TokenExchangeResponseJson
     {
-        public string IamToken { get; init; }
+        public string? IamToken { get; init; }
 
-        public DateTime ExpiresAt { get; init; }
+        public DateTime? ExpiresAt { get; init; }
     }
 
     private static Failure<HttpFailureCode> ReadTokenFailure(HttpSendFailure failure)
@@ -41,9 +41,9 @@ internal sealed partial class TokenExchangeFunc(IHttpApi httpApi) : ITokenExchan
         return failure.ToStandardFailure("An unexpected error occured when trying to exchange token:");
     }
 
-    internal readonly record struct TokenExchangeFailureJson
+    private readonly record struct TokenExchangeFailureJson
     {
-        public string Message { get; init; }
+        public string? Message { get; init; }
     }
 
     private static TokenExchangeFailureCode MapTokenExchangeFailureCode(HttpFailureCode failureCode)

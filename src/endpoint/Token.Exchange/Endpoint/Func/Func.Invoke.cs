@@ -19,21 +19,20 @@ partial class TokenExchangeFunc
             {
                 YandexPassportOauthToken = @in.YandexPassportOauthToken,
             })
-        .Pipe(
-            static @in => new HttpSendIn(HttpVerb.Post, $"/iam/v1/tokens")
+        .MapSuccess(
+            static @in => new HttpSendIn(HttpVerb.Post, "/iam/v1/tokens")
             {
-                Body = HttpBody.SerializeAsJson(@in.SuccessOrThrow()) //TODO: i dont get it how to properly handle this case
+                Body = HttpBody.SerializeAsJson(@in)
             })
-        .PipeValue(
-            httpApi.SendAsync)
-        .Map(
-            static success => success.Body.DeserializeFromJson<TokenExchangeResponseJson>(),
-            ReadTokenFailure)
-        .Map(
+        .ForwardValue(
+            httpApi.SendAsync,
+            static failure => ReadTokenFailure(failure).MapFailureCode(MapTokenExchangeFailureCode))
+        .MapSuccess(
+            static success => success.Body.DeserializeFromJson<TokenExchangeResponseJson>())
+        .MapSuccess(
             static success => new TokenExchangeOut
             {
-                IamToken = success.IamToken,
-                ExpiresAt = success.ExpiresAt
-            },
-            static failure => failure.MapFailureCode(MapTokenExchangeFailureCode));
+                IamToken = success.IamToken.OrEmpty(),
+                ExpiresAt = success.ExpiresAt.GetValueOrDefault()
+            });
 }
