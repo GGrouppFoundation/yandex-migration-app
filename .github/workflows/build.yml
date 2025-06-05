@@ -1,4 +1,4 @@
-name: Build Azure Func
+name: Build Web API
 on:
   push:
     branches: [ '**' ]
