@@ -47,6 +47,14 @@ jobs:
         id: date
         run: echo "datetime=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
+      - name: Web Api Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: '${{ github.workspace }}/publish/appsettings.json'
+        env:
+          Info.ApiVersion: ${{ steps.get_version.outputs.version }}
+          Info.BuildDateTime: '${{ steps.date.outputs.datetime }}'
+
       - name: Archive Web API folder
         run: |
           cd ./publish

@@ -1,0 +1,48 @@
+name: Delete Web API Artifact
+
+on:
+  release:
+    types:
+      - deleted
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Get version
+      id: get_version
+      run: echo "version=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_ARTIFACT }}
+        
+    - name: Delete from Azure Blob Storage
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          web_api_blob_exists=$(az storage blob exists \
+            --name ${{ vars.AZURE_ARTIFACT_NAME }}-${{ steps.get_version.outputs.version }}.zip \
+            --container-name 'artifact' \
+            --account-name ${{ vars.AZURE_ARTIFACT_ACCOUNT_NAME }} \
+            --auth-mode login --output tsv --query exists)
+
+          if [ $web_api_blob_exists = true ]
+          then
+            az storage blob delete \
+              --name ${{ vars.AZURE_ARTIFACT_NAME }}-${{ steps.get_version.outputs.version }}.zip \
+              --container-name 'artifact' \
+              --account-name ${{ vars.AZURE_ARTIFACT_ACCOUNT_NAME }} \
+              --auth-mode login
+            fi
+
+    - name: Azure Logout
+      uses: azure/CLI@v1
+      with:
+        inlineScript: az logout
