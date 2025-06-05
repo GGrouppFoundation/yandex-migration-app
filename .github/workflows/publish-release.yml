@@ -131,7 +131,7 @@ jobs:
     - name: Ping Health Check URL
       uses: GarageGroup/platform-ping-app@v0.0.3
       with:
-        health_check_url: https://${{ vars.TEST_APIM_DNS }}/health/${{ vars.APIM_WEB_API_HEALTH_NAME }}?subscription-key=${{ secrets.TEST_APIM_KEY }}
+        health_check_url: https://${{ vars.TEST_WEBAPP_DNS }}/health
         contains: ${{ steps.get_version.outputs.version }}
         retry_delay_in_seconds: 15
         max_attempts: 10
