@@ -1,0 +1,139 @@
+name: Publish Release
+
+on:
+  page_build:
+  release:
+    types:
+      - created
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Github repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - name: Add Garage Group NuGet Source
+        run: >
+          dotnet nuget add source ${{ vars.GG_NUGET_SOURCE_URL }}
+          -n garage
+          -u ${{ secrets.GG_NUGET_SOURCE_USER_NAME }}
+          -p ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
+          --store-password-in-clear-text
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore  -c Release
+
+      - name: Test
+        run: dotnet test --no-restore  -c Release
+
+      - name: Publish Web Api
+        run: dotnet publish ./src/*/*/Application.csproj -c Release -o '${{ github.workspace }}/publish'
+
+      - name: Get version
+        id: get_version
+        run: echo "version=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+
+      - name: Get current date time
+        id: date
+        run: echo "datetime=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+
+      - name: Archive Web API folder
+        run: |
+          cd ./publish
+          zip -r ${{ vars.AZURE_ARTIFACT_NAME }}-${{ steps.get_version.outputs.version }}.zip ./
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_ARTIFACT }}
+
+      - name: Upload to Azure Blob Storage
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            az storage blob upload \
+              --container-name 'artifact' \
+              --file ./publish/${{ vars.AZURE_ARTIFACT_NAME }}-${{ steps.get_version.outputs.version }}.zip \
+              --account-name ${{ vars.AZURE_ARTIFACT_ACCOUNT_NAME }} \
+              --account-key ${{ secrets.AZURE_ACCOUNT_KEY_ARTIFACT }} \
+
+        env:
+          AZURE_STORAGE_ACCOUNT: ${{ vars.AZURE_ARTIFACT_ACCOUNT_NAME }}
+
+      - name: Azure Logout
+        uses: azure/CLI@v1
+        with:
+          inlineScript: az logout
+
+  deploy-web-api-to-test:
+    runs-on: ubuntu-latest
+    needs: publish
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: get_version
+        run: echo "version=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_ARTIFACT }}
+
+      - name: Ensure Publish Directory Exists
+        run: mkdir -p ./publish
+
+      - name: Download from Blob Storage
+        run: |
+          az storage blob download \
+            --name ${{ vars.AZURE_ARTIFACT_NAME }}-${{ steps.get_version.outputs.version }}.zip \
+            --file ./publish/${{ vars.AZURE_ARTIFACT_NAME }}-${{ steps.get_version.outputs.version }}.zip \
+            --account-name ${{ vars.AZURE_ARTIFACT_ACCOUNT_NAME }} \
+            --container-name 'artifact' \
+            --account-key ${{ secrets.AZURE_ACCOUNT_KEY_ARTIFACT }}
+
+      - name: Run Azure webapp deploy action using publish profile credentials
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ vars.TEST_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.TEST_AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: ./publish/${{ vars.AZURE_ARTIFACT_NAME }}-${{ steps.get_version.outputs.version }}.zip
+
+      - name: Azure Logout
+        uses: azure/CLI@v1
+        with:
+          inlineScript: az logout
+
+  ping-web-api-test:
+    runs-on: ubuntu-latest
+    needs: deploy-web-api-to-test
+
+    steps:
+    - name: Get version
+      id: get_version
+      run: echo "version=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+
+    - name: Ping Health Check URL
+      uses: GarageGroup/platform-ping-app@v0.0.3
+      with:
+        health_check_url: https://${{ vars.TEST_APIM_DNS }}/health/${{ vars.APIM_WEB_API_HEALTH_NAME }}?subscription-key=${{ secrets.TEST_APIM_KEY }}
+        contains: ${{ steps.get_version.outputs.version }}
+        retry_delay_in_seconds: 15
+        max_attempts: 10
