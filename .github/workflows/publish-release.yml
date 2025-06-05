@@ -5,6 +5,8 @@ on:
   release:
     types:
       - created
+  push:
+    branches: [ '**' ]
 
 jobs:
   publish:
@@ -18,10 +20,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-
-      - name: Install Azure CLI
-        run: |
-          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
       - name: Add Garage Group NuGet Source
         run: >
